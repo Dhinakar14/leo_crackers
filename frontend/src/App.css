@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+.marquee-container {
+  overflow: hidden; 
+  white-space: nowrap;
+  box-sizing: border-box;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5c6cb;
+}
+
+.form-control:focus{
+  box-shadow: none !important;
+}
+
+.marquee-content {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee-scroll 15s linear infinite;
+}
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+}}
+.custom-card {
+  background: linear-gradient(145deg, #4a00e0, #8e2de2);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.cta-button {
+  background: linear-gradient(220deg, #457AFF 0%, #1E59FF 60.16%);
+  color: #F4F4F4;
+  border: 1px solid transparent;
+  box-shadow: 0 0 6px 2px rgba(0, 61, 255, 0.12);
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 1s;
+}
+.cta-button:hover {
+  box-shadow: 0 0 12px 4px rgba(30, 89, 255, 0.18);
+}
+.swiper-button-prev:after { display: none; }
+.swiper-button-next::after { display: none; }
+nav.py-1.shadow-sm.header.navbar.navbar-expand-lg.navbar-light, footer.bg-dark.text-white.py-4 {
+    background: #de2a12 !important;
+}
+
+a.text-light.fw-bold.active.nav-link.active {
+    text-decoration: underline;
+}
+header.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.carousel-indicators
+ {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1 !important;
+    justify-content: center;
+    padding: 0;
+    margin-right: 15%;
+    margin-bottom: 1rem;
+    margin-left: 15%;
+    display: flex;
+}
+.active>.page-link, .page-link.active {
+  z-index: 1 !important;
+  color: var(--bs-pagination-active-color);
+  background-color: var(--bs-pagination-active-bg);
+  border-color: var(--bs-pagination-active-border-color);
+}
