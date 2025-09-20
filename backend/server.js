@@ -9,7 +9,6 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5000",
-    "http://localhost:3000",
     "https://leo-crackers-1-frontend.onrender.com",
     "https://leocrackers-pgr.netlify.app"  // ✅ Added your Netlify domain
   ],
