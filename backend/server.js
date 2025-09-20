@@ -1,7 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-const sendMail = require("./utils/sendEmail");
 
 const app = express();
 
@@ -9,8 +7,9 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5000",
+    "http://localhost:3000",
     "https://leo-crackers-1-frontend.onrender.com",
-    "https://leocrackers-pgr.netlify.app"  // ✅ Added your Netlify domain
+    "https://leocrackers-pgr.netlify.app"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -20,9 +19,18 @@ app.use(cors({
 // Handle preflight requests
 app.options('*', cors());
 
-// Body parser middleware
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+// Body parser middleware - using express built-in instead of body-parser
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Import sendMail with error handling
+let sendMail;
+try {
+  sendMail = require("./utils/sendEmail");
+} catch (error) {
+  console.log("⚠️ Email utility not found, continuing without email functionality");
+  sendMail = null;
+}
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -86,20 +94,24 @@ app.post("/checkout", async (req, res) => {
     }
 
     // Try to send email, but don't fail if it doesn't work
-    try {
-      await sendMail({
-        name,
-        mobile,
-        email,
-        address,
-        district,
-        pincode,
-        total,
-        items: items // Pass the items array directly, let sendEmail handle the formatting
-      });
-      console.log("✅ Email sent successfully");
-    } catch (emailError) {
-      console.log("⚠️ Email failed, but order will still be processed:", emailError.message);
+    if (sendMail) {
+      try {
+        await sendMail({
+          name,
+          mobile,
+          email,
+          address,
+          district,
+          pincode,
+          total,
+          items: items
+        });
+        console.log("✅ Email sent successfully");
+      } catch (emailError) {
+        console.log("⚠️ Email failed, but order will still be processed:", emailError.message);
+      }
+    } else {
+      console.log("📧 Email service not available, order processed without email");
     }
 
     console.log("✅ Order processed successfully for:", name);
