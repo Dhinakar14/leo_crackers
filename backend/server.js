@@ -10,7 +10,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://leo-crackers-1-frontend.onrender.com"
+    "https://leocrackers-pgr.netlify.app/"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"]
